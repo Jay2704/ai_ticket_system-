@@ -23,4 +23,5 @@ class Ticket:
         pass
 
     def get_ticket_summary(self):
-        pass
+        # display the info aboutthe ticket
+        pass 
