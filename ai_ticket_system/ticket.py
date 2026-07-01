@@ -23,5 +23,11 @@ class Ticket:
         pass
 
     def get_ticket_summary(self):
-        # display the info aboutthe ticket
-        pass 
+        print(f"Ticket ID       : {self.ticket_id}")
+        print(f"User Name       : {self.user_name}")
+        print(f"Issue           : {self.issue_description}")
+        print(f"Category        : {self.issue_category}")
+        print(f"Priority        : {self.priority}")
+        print(f"Status          : {self.status}")
+        print(f"Assigned Team   : {self.assigned_team}")
+        print(f"Created At      : {self.created_at}")
