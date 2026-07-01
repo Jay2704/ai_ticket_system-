@@ -1,14 +1,14 @@
 class Ticket:
 
-    def __init__(self):
-        self.ticket_id = 0
-        self.user_name = ""
-        self.issue_description = ""
-        self.issue_category = ""
-        self.priority = ""
-        self.status = ""
-        self.assigned_team = ""
-        self.created_at = ""
+    def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
+        self.ticket_id = ticket_id
+        self.user_name = user_name
+        self.issue_description = issue_description
+        self.issue_category = issue_category
+        self.priority = priority
+        self.status = "Open"
+        self.assigned_team = "Unassigned"
+        self.created_at = "Today"
 
     def create_ticket(self):
         pass
