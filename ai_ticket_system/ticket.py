@@ -16,8 +16,8 @@ class Ticket:
     def update_status(self):
         pass
 
-    def update_priority(self):
-        pass
+    def update_priority(self, new_priority):
+        self.priority = new_priority
 
     def assign_team(self):
         pass
