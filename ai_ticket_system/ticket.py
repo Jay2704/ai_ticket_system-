@@ -13,14 +13,25 @@ class Ticket:
     def create_ticket(self):
         pass
 
-    def update_status(self):
-        pass
+    def update_status(self, new_status):
+        self.status = new_status
 
     def update_priority(self, new_priority):
         self.priority = new_priority
 
     def assign_team(self):
         pass
+
+    def assign_team(self):
+        if self.issue_category == "Technical":
+            self.assigned_team = "IT Team"
+        elif self.issue_category == "Payment":
+            self.assigned_team = "Finance Team"
+        elif self.issue_category == "Account":
+            self.assigned_team = "Support Team"
+        else:
+            self.assigned_team = "General Support"
+
 
     def get_ticket_summary(self):
         print(f"Ticket ID       : {self.ticket_id}")
