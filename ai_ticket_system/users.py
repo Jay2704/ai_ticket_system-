@@ -24,3 +24,4 @@ class Users:
     def update_email(self, new_email):
         self.email = new_email
     
+    
