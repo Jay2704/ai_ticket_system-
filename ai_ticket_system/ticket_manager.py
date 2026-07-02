@@ -1,5 +1,6 @@
 class TicketManager:
-    def __init__(self) -> None:
+
+    def __init__(self):
         self.tickets = []
 
     def add_ticket(self, ticket):
@@ -19,11 +20,13 @@ class TicketManager:
 
     def update_status(self, ticket_id, new_status):
         ticket = self.find_ticket(ticket_id)
+
         if ticket:
             ticket.update_status(new_status)
 
     def update_priority(self, ticket_id, new_priority):
         ticket = self.find_ticket(ticket_id)
+
         if ticket:
             ticket.update_priority(new_priority)
 
