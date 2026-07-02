@@ -10,17 +10,11 @@ class Ticket:
         self.assigned_team = "Unassigned"
         self.created_at = "Today"
 
-    def create_ticket(self):
-        pass
-
     def update_status(self, new_status):
         self.status = new_status
 
     def update_priority(self, new_priority):
         self.priority = new_priority
-
-    def assign_team(self):
-        pass
 
     def assign_team(self):
         if self.issue_category == "Technical":
@@ -32,13 +26,13 @@ class Ticket:
         else:
             self.assigned_team = "General Support"
 
-
     def get_ticket_summary(self):
-        print(f"Ticket ID       : {self.ticket_id}")
-        print(f"User Name       : {self.user_name}")
-        print(f"Issue           : {self.issue_description}")
-        print(f"Category        : {self.issue_category}")
-        print(f"Priority        : {self.priority}")
-        print(f"Status          : {self.status}")
-        print(f"Assigned Team   : {self.assigned_team}")
-        print(f"Created At      : {self.created_at}")
+        print(f"Ticket ID     : {self.ticket_id}")
+        print(f"User Name     : {self.user_name}")
+        print(f"Issue         : {self.issue_description}")
+        print(f"Category      : {self.issue_category}")
+        print(f"Priority      : {self.priority}")
+        print(f"Status        : {self.status}")
+        print(f"Assigned Team : {self.assigned_team}")
+        print(f"Created At    : {self.created_at}")
+        print("-" * 40)
