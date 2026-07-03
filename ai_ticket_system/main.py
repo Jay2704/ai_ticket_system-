@@ -1,23 +1,7 @@
 from user import User
 from ticket import Ticket
 from ticket_manager import TicketManager
-
-
-PRIORITIES = {
-    1: ("Low", "Minor issue, no urgency."),
-    2: ("Normal", "Standard request."),
-    3: ("Medium", "Affects work but system still usable."),
-    4: ("High", "Major impact. Needs attention soon."),
-    5: ("Critical", "System down or security/data risk."),
-}
-
-STATUSES = {
-    1: ("Open", "New ticket."),
-    2: ("In Progress", "Team is working on it."),
-    3: ("Pending", "Waiting for input."),
-    4: ("Resolved", "Fix applied."),
-    5: ("Closed", "Ticket complete."),
-}
+from constants import PRIORITIES, STATUSES
 
 
 user1 = User(1, "Jay", "jay@gmail.com", "Customer", "Engineering")
@@ -39,6 +23,7 @@ ticket2.update_status(STATUSES[1][0])
 ticket3.update_status(STATUSES[3][0])
 ticket4.update_status(STATUSES[2][0])
 ticket5.update_status(STATUSES[4][0])
+
 
 
 for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
