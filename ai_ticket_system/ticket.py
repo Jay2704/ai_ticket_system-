@@ -11,7 +11,8 @@ class Ticket:
         self.created_at = "Today"
 
     def update_status(self, new_status):
-        self.status = new_status
+        # self.status = new_status
+        pass
 
     def update_priority(self, new_priority):
         self.priority = new_priority
