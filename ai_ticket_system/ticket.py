@@ -8,7 +8,7 @@ class Ticket:
         self.priority = priority
         self.status = "Open"
         self.assigned_team = "Unassigned"
-        self.created_at = "Today"
+        self.created_at = "Today" 
 
     def update_status(self, new_status):
         # self.status = new_status
