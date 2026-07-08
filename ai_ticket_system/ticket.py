@@ -17,6 +17,7 @@ class Ticket:
         self.priority = new_priority
 
     
+    
     def get_ticket_summary(self):
         print(f"Ticket ID     : {self.ticket_id}")
         print(f"User Name     : {self.user_name}")
