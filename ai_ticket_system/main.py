@@ -1,8 +1,10 @@
-from user import User
+from users import User
 from ticket import Ticket
 from ticket_manager import TicketManager
 from constants import PRIORITIES, STATUSES
 
+
+manager = TicketManager()
 
 user1 = User(1, "Jay", "jay@gmail.com", "Customer", "Engineering")
 user2 = User(2, "John", "john@gmail.com", "Customer", "Sales")
@@ -18,19 +20,15 @@ ticket4 = Ticket(4, user4.user_name, "App is slow on mobile", "Technical", PRIOR
 ticket5 = Ticket(5, user5.user_name, "Question about billing cycle", "Payment", PRIORITIES[1][0])
 
 
-ticket1.update_status(STATUSES[2][0])
-ticket2.update_status(STATUSES[1][0])
-ticket3.update_status(STATUSES[3][0])
-ticket4.update_status(STATUSES[2][0])
-ticket5.update_status(STATUSES[4][0])
-
+manager.update_status(ticket1.ticket_id, STATUSES[2][0])
+manager.update_status(ticket2.ticket_id, STATUSES[1][0])
+manager.update_status(ticket3.ticket_id, STATUSES[3][0])
+manager.update_status(ticket4.ticket_id, STATUSES[2][0])
+manager.update_status(ticket5.ticket_id, STATUSES[4][0])
 
 
 for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
     ticket.assign_team()
-
-
-manager = TicketManager()
 
 for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
     manager.add_ticket(ticket)
