@@ -23,12 +23,16 @@ class TicketManager:
 
         if ticket:
             ticket.update_status(new_status)
+        else:
+            print("Ticket not found")
 
     def update_priority(self, ticket_id, new_priority):
         ticket = self.find_ticket(ticket_id)
 
         if ticket:
             ticket.update_priority(new_priority)
+        else:
+            print("Ticket not found")
 
     def show_all_tickets(self):
         for ticket in self.tickets:

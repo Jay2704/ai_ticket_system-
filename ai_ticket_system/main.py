@@ -20,18 +20,15 @@ ticket4 = Ticket(4, user4.user_name, "App is slow on mobile", "Technical", PRIOR
 ticket5 = Ticket(5, user5.user_name, "Question about billing cycle", "Payment", PRIORITIES[1][0])
 
 
+for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
+    manager.add_ticket(ticket)
+    ticket.assign_team()
+
 manager.update_status(ticket1.ticket_id, STATUSES[2][0])
 manager.update_status(ticket2.ticket_id, STATUSES[1][0])
 manager.update_status(ticket3.ticket_id, STATUSES[3][0])
 manager.update_status(ticket4.ticket_id, STATUSES[2][0])
 manager.update_status(ticket5.ticket_id, STATUSES[4][0])
-
-
-for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
-    ticket.assign_team()
-
-for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
-    manager.add_ticket(ticket)
 
 
 print("=== All Tickets ===")

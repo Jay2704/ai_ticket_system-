@@ -1,3 +1,6 @@
+from constants import PRIORITIES, STATUSES
+
+
 class Ticket:
 
     def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
@@ -11,11 +14,19 @@ class Ticket:
         self.created_at = "Today" 
 
     def update_status(self, new_status):
-        self.status = new_status
+        for status in STATUSES.values():
+            if status[0] == new_status:
+                self.status = new_status
+                return 
+        print("Invalid status")
         
 
     def update_priority(self, new_priority):
-        self.priority = new_priority
+        for priority in PRIORITIES.values():
+            if priority[0] == new_priority:
+                self.priority = new_priority
+                return
+        print("Invalid priority")
 
     def assign_team(self):
         if self.issue_category == "Technical":
