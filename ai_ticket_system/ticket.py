@@ -8,25 +8,33 @@ class Ticket:
         self.user_name = user_name
         self.issue_description = issue_description
         self.issue_category = issue_category
-        self.priority = priority
-        self.status = "Open"
         self.assigned_team = "Unassigned"
-        self.created_at = "Today" 
+        self.created_at = "Today"
+        self.status = "Open"
+        self.priority = PRIORITIES[2][0]
+
+        if self._is_valid_priority(priority):
+            self.priority = priority
+        else:
+            print("Invalid priority")
+
+    def _is_valid_status(self, new_status):
+        return any(status[0] == new_status for status in STATUSES.values())
+
+    def _is_valid_priority(self, new_priority):
+        return any(priority[0] == new_priority for priority in PRIORITIES.values())
 
     def update_status(self, new_status):
-        for status in STATUSES.values():
-            if status[0] == new_status:
-                self.status = new_status
-                return 
-        print("Invalid status")
-        
+        if self._is_valid_status(new_status):
+            self.status = new_status
+        else:
+            print("Invalid status")
 
     def update_priority(self, new_priority):
-        for priority in PRIORITIES.values():
-            if priority[0] == new_priority:
-                self.priority = new_priority
-                return
-        print("Invalid priority")
+        if self._is_valid_priority(new_priority):
+            self.priority = new_priority
+        else:
+            print("Invalid priority")
 
     def assign_team(self):
         if self.issue_category == "Technical":
