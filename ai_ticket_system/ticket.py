@@ -1,3 +1,4 @@
+from ai_ticket_system.main import ticket
 from constants import PRIORITIES, STATUSES
 from exceptions import InvalidPriorityError, InvalidStatusError
 
@@ -63,3 +64,11 @@ class Ticket:
         print(f"Assigned Team : {self.assigned_team}")
         print(f"Created At    : {self.created_at}")
         print("-" * 40)
+
+
+
+# Inheritance - TechnicalTicket is a subclass of Ticket  
+
+class TechnicalTicket(Ticket):
+    def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
+        super().__init__(ticket_id, user_name, issue_description, issue_category, priority)

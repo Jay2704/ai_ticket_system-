@@ -2,6 +2,7 @@ from users import User
 from ticket import Ticket
 from ticket_manager import TicketManager
 from constants import PRIORITIES, STATUSES
+from exceptions import InvalidStatusError, InvalidPriorityError, TicketNotFoundError
 
 
 manager = TicketManager()
@@ -29,6 +30,24 @@ manager.update_status(ticket2.ticket_id, STATUSES[1][0])
 manager.update_status(ticket3.ticket_id, STATUSES[3][0])
 manager.update_status(ticket4.ticket_id, STATUSES[2][0])
 manager.update_status(ticket5.ticket_id, STATUSES[4][0])
+
+
+print("=== Exception Handling ===")
+
+try:
+    manager.update_status(99, STATUSES[5][0])
+except TicketNotFoundError as e:
+    print(e)
+
+try:
+    manager.update_status(ticket1.ticket_id, "Sleeping")
+except InvalidStatusError as e:
+    print(e)
+
+try:
+    manager.update_priority(ticket1.ticket_id, "Urgent")
+except InvalidPriorityError as e:
+    print(e)
 
 
 print("=== All Tickets ===")
