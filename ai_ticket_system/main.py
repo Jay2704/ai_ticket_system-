@@ -33,3 +33,12 @@ manager.update_status(ticket5.ticket_id, STATUSES[4][0])
 
 print("=== All Tickets ===")
 manager.show_all_tickets()
+
+print("=== Open Tickets ===")
+manager.show_open_tickets()
+
+print("=== Critical Priority Tickets ===")
+manager.show_tickets_by_priority(PRIORITIES[5][0])
+
+print("=== IT Team Tickets ===")
+manager.show_tickets_by_team("IT Team")

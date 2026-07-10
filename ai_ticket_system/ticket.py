@@ -1,4 +1,5 @@
 from constants import PRIORITIES, STATUSES
+from exceptions import InvalidPriorityError, InvalidStatusError
 
 
 class Ticket:
@@ -10,13 +11,19 @@ class Ticket:
         self.issue_category = issue_category
         self.assigned_team = "Unassigned"
         self.created_at = "Today"
-        self.status = "Open"
-        self.priority = PRIORITIES[2][0]
+        self.__status = "Open"
+        self.__priority = PRIORITIES[2][0]
 
         if self._is_valid_priority(priority):
-            self.priority = priority
+            self.__priority = priority
         else:
-            print("Invalid priority")
+            raise InvalidPriorityError(f"Invalid priority: {priority}")
+
+    def get_status(self):
+        return self.__status
+
+    def get_priority(self):
+        return self.__priority
 
     def _is_valid_status(self, new_status):
         return any(status[0] == new_status for status in STATUSES.values())
@@ -26,15 +33,15 @@ class Ticket:
 
     def update_status(self, new_status):
         if self._is_valid_status(new_status):
-            self.status = new_status
+            self.__status = new_status
         else:
-            print("Invalid status")
+            raise InvalidStatusError(f"Invalid status: {new_status}")
 
     def update_priority(self, new_priority):
         if self._is_valid_priority(new_priority):
-            self.priority = new_priority
+            self.__priority = new_priority
         else:
-            print("Invalid priority")
+            raise InvalidPriorityError(f"Invalid priority: {new_priority}")
 
     def assign_team(self):
         if self.issue_category == "Technical":
@@ -46,14 +53,13 @@ class Ticket:
         else:
             self.assigned_team = "General Support"
 
-    
     def get_ticket_summary(self):
         print(f"Ticket ID     : {self.ticket_id}")
         print(f"User Name     : {self.user_name}")
         print(f"Issue         : {self.issue_description}")
         print(f"Category      : {self.issue_category}")
-        print(f"Priority      : {self.priority}")
-        print(f"Status        : {self.status}")
+        print(f"Priority      : {self.__priority}")
+        print(f"Status        : {self.__status}")
         print(f"Assigned Team : {self.assigned_team}")
         print(f"Created At    : {self.created_at}")
         print("-" * 40)
