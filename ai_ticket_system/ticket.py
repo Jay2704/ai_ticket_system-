@@ -74,3 +74,7 @@ class TechnicalTicket(Ticket):
         super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
     
     
+
+
+class PaymentTicket(Ticket):
+    pass
