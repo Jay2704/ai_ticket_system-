@@ -75,9 +75,14 @@ class TechnicalTicket(Ticket):
     
     
 
-
 # Inheritance - PaymentTicket is a subclass of Ticket
 class PaymentTicket(Ticket):
+    def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
+        super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
+    
+
+# Inheritance - AccountTicket is a subclass of Ticket
+class AccountTicket(Ticket):
     def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
         super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
     
