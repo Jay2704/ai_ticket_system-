@@ -73,7 +73,7 @@ class TechnicalTicket(Ticket):
         super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
 
     def assign_team(self):
-        self.assign_team
+        self.assigned_team = "Technical Team"
     
     
 # Inheritance - PaymentTicket is a subclass of Ticket
