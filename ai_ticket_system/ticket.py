@@ -80,6 +80,9 @@ class TechnicalTicket(Ticket):
 class PaymentTicket(Ticket):
     def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
         super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
+
+    def assign_team(self):
+        self.assigned_team = "Finance Team"
     
 
 # Inheritance - AccountTicket is a subclass of Ticket
@@ -87,3 +90,5 @@ class AccountTicket(Ticket):
     def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
         super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
     
+    def assign_team(self):
+        self.assigned_team = "Support Team"
