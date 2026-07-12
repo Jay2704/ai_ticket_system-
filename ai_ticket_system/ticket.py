@@ -1,4 +1,3 @@
-from ai_ticket_system.main import ticket
 from constants import PRIORITIES, STATUSES
 from exceptions import InvalidPriorityError, InvalidStatusError
 
