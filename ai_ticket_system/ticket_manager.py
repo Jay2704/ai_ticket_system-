@@ -13,13 +13,7 @@ class TicketManager:
     def get_all_tickets(self):
         return self.tickets
 
-    def remove_ticket(self, ticket_id):
-        ticket = self.find_ticket(ticket_id)
-
-        if ticket:
-            self.tickets.remove(ticket)
-        else:
-            raise TicketNotFoundError(f"Ticket not found: {ticket_id}")
+    
 
     def find_ticket(self, ticket_id):
         for ticket in self.tickets:
