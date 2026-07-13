@@ -1,4 +1,5 @@
 from ticket import TechnicalTicket, PaymentTicket, AccountTicket
+from ticket_manager import TicketManager
 from constants import PRIORITIES, STATUSES
 
 
@@ -107,12 +108,53 @@ def test_inherited_private_data():
     return passed
 
 
+def test_child_objects_in_manager():
+    print("=== Add Child Objects to TicketManager ===")
+
+    manager = TicketManager()
+
+    technical = TechnicalTicket(
+        1, "Jay", "Cannot log in to account", "Technical", PRIORITIES[5][0]
+    )
+    payment = PaymentTicket(
+        2, "John", "Payment failed but money was deducted", "Payment", PRIORITIES[4][0]
+    )
+    account = AccountTicket(
+        3, "Jane", "Want to update email address", "Account", PRIORITIES[2][0]
+    )
+
+    for ticket in [technical, payment, account]:
+        ticket.assign_team()
+        manager.add_ticket(ticket)
+
+    stored = manager.get_all_tickets()
+    class_names = [type(ticket).__name__ for ticket in stored]
+
+    count_ok = len(stored) == 3
+    types_ok = class_names == ["TechnicalTicket", "PaymentTicket", "AccountTicket"]
+    same_list = stored is manager.tickets
+    passed = count_ok and types_ok and same_list
+
+    print(f"Tickets in manager list : {len(stored)}")
+    print(f"Classes stored          : {class_names}")
+    print("All subclasses share one tickets list in TicketManager")
+    print(f"Mixed subclasses stored : {passed}")
+    print("-" * 40)
+
+    print("Managers can still show mixed tickets:")
+    manager.show_all_tickets()
+
+    return passed
+
+
 if __name__ == "__main__":
     override_ok = test_assign_team_override()
     methods_ok = test_inherited_methods()
     private_ok = test_inherited_private_data()
+    manager_ok = test_child_objects_in_manager()
 
     print("=== Summary ===")
     print(f"Override         : {override_ok}")
     print(f"Inherited methods: {methods_ok}")
     print(f"Private data     : {private_ok}")
+    print(f"Manager storage  : {manager_ok}")
