@@ -1,5 +1,5 @@
 from ticket import TechnicalTicket, PaymentTicket, AccountTicket
-from constants import PRIORITIES
+from constants import PRIORITIES, STATUSES
 
 
 def test_assign_team_override():
@@ -59,5 +59,60 @@ def test_assign_team_override():
     return all_passed
 
 
+def test_inherited_methods():
+    print("=== Test Inherited Methods ===")
+
+    child = TechnicalTicket(
+        10, "Jay", "App crashes on launch", "Technical", PRIORITIES[4][0]
+    )
+
+    child.update_status(STATUSES[2][0])
+    child.update_priority(PRIORITIES[5][0])
+
+    status_ok = child.get_status() == STATUSES[2][0]
+    priority_ok = child.get_priority() == PRIORITIES[5][0]
+    passed = status_ok and priority_ok
+
+    print(f"Called update_status()   -> {child.get_status()} (expected In Progress)")
+    print(f"Called update_priority() -> {child.get_priority()} (expected Critical)")
+    print("Called get_ticket_summary() on child:")
+    child.get_ticket_summary()
+    print(f"Inherited methods work   : {passed}")
+    print("-" * 40)
+
+    return passed
+
+
+def test_inherited_private_data():
+    print("=== Test Inherited Private Data ===")
+
+    child = PaymentTicket(
+        11, "John", "Refund not received", "Payment", PRIORITIES[3][0]
+    )
+
+    status = child.get_status()
+    priority = child.get_priority()
+
+    # Access only through getters — never child.__status or child.__priority
+    status_ok = status == STATUSES[1][0]
+    priority_ok = priority == PRIORITIES[3][0]
+    passed = status_ok and priority_ok
+
+    print(f"get_status()   -> {status} (expected Open)")
+    print(f"get_priority() -> {priority} (expected Medium)")
+    print("Accessed private data via getters only (not __status / __priority)")
+    print(f"Private data access works : {passed}")
+    print("-" * 40)
+
+    return passed
+
+
 if __name__ == "__main__":
-    test_assign_team_override()
+    override_ok = test_assign_team_override()
+    methods_ok = test_inherited_methods()
+    private_ok = test_inherited_private_data()
+
+    print("=== Summary ===")
+    print(f"Override         : {override_ok}")
+    print(f"Inherited methods: {methods_ok}")
+    print(f"Private data     : {private_ok}")
