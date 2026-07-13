@@ -66,28 +66,20 @@ class Ticket:
 
 
 
-# Inheritance - TechnicalTicket is a subclass of Ticket  
+# Inheritance - TechnicalTicket is a subclass of Ticket
+# No custom __init__ needed — parent Ticket.__init__ is inherited directly
 class TechnicalTicket(Ticket):
-    def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
-        super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
-
     def assign_team(self):
         self.assigned_team = "Technical Team"
-    
-    
+
+
 # Inheritance - PaymentTicket is a subclass of Ticket
 class PaymentTicket(Ticket):
-    def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
-        super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
-
     def assign_team(self):
         self.assigned_team = "Finance Team"
-    
+
 
 # Inheritance - AccountTicket is a subclass of Ticket
 class AccountTicket(Ticket):
-    def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
-        super().__init__(ticket_id, user_name, issue_description, issue_category, priority)
-    
     def assign_team(self):
         self.assigned_team = "Support Team"
