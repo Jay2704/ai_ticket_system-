@@ -234,6 +234,27 @@ def test_child_specific_attributes():
     return passed
 
 
+def test_summary_override_with_super():
+    print("=== Test get_ticket_summary() Override with super() ===")
+
+    technical = TechnicalTicket(
+        1, "Jay", "Cannot log in", PRIORITIES[5][0], "AuthService", "ERR_AUTH_401"
+    )
+    technical.assign_team()
+
+    method_owner = type(technical).get_ticket_summary.__qualname__
+    passed = method_owner.startswith("TechnicalTicket")
+
+    print("Child get_ticket_summary() calls super().get_ticket_summary()")
+    print("then adds child-specific fields:")
+    technical.get_ticket_summary()
+    print(f"Method used            : {method_owner}")
+    print(f"Summary override works : {passed}")
+    print("-" * 40)
+
+    return passed
+
+
 if __name__ == "__main__":
     override_ok = test_assign_team_override()
     methods_ok = test_inherited_methods()
@@ -241,6 +262,7 @@ if __name__ == "__main__":
     manager_ok = test_child_objects_in_manager()
     poly_ok = test_polymorphism()
     attrs_ok = test_child_specific_attributes()
+    summary_ok = test_summary_override_with_super()
 
     print("=== Summary ===")
     print(f"Override         : {override_ok}")
@@ -249,3 +271,4 @@ if __name__ == "__main__":
     print(f"Manager storage  : {manager_ok}")
     print(f"Polymorphism     : {poly_ok}")
     print(f"Child attributes : {attrs_ok}")
+    print(f"Summary override : {summary_ok}")

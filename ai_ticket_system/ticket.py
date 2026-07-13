@@ -62,14 +62,18 @@ class Ticket:
         print(f"Status        : {self.__status}")
         print(f"Assigned Team : {self.assigned_team}")
         print(f"Created At    : {self.created_at}")
-        print("-" * 40)
+        # Separator only for base Ticket; children add extras then print their own
+        if type(self) is Ticket:
+            print("-" * 40)
 
 
 
 # Inheritance - TechnicalTicket is a subclass of Ticket
 class TechnicalTicket(Ticket):
     def __init__(self, ticket_id, user_name, issue_description, priority, system_name, error_code):
+        # Common attributes initialized through the parent
         super().__init__(ticket_id, user_name, issue_description, "Technical", priority)
+        # Child-specific attributes
         self.system_name = system_name
         self.error_code = error_code
 
@@ -77,14 +81,7 @@ class TechnicalTicket(Ticket):
         self.assigned_team = "Technical Team"
 
     def get_ticket_summary(self):
-        print(f"Ticket ID     : {self.ticket_id}")
-        print(f"User Name     : {self.user_name}")
-        print(f"Issue         : {self.issue_description}")
-        print(f"Category      : {self.issue_category}")
-        print(f"Priority      : {self.get_priority()}")
-        print(f"Status        : {self.get_status()}")
-        print(f"Assigned Team : {self.assigned_team}")
-        print(f"Created At    : {self.created_at}")
+        super().get_ticket_summary()
         print(f"System Name   : {self.system_name}")
         print(f"Error Code    : {self.error_code}")
         print("-" * 40)
@@ -93,7 +90,9 @@ class TechnicalTicket(Ticket):
 # Inheritance - PaymentTicket is a subclass of Ticket
 class PaymentTicket(Ticket):
     def __init__(self, ticket_id, user_name, issue_description, priority, transaction_id, payment_amount):
+        # Common attributes initialized through the parent
         super().__init__(ticket_id, user_name, issue_description, "Payment", priority)
+        # Child-specific attributes
         self.transaction_id = transaction_id
         self.payment_amount = payment_amount
 
@@ -101,14 +100,7 @@ class PaymentTicket(Ticket):
         self.assigned_team = "Finance Team"
 
     def get_ticket_summary(self):
-        print(f"Ticket ID     : {self.ticket_id}")
-        print(f"User Name     : {self.user_name}")
-        print(f"Issue         : {self.issue_description}")
-        print(f"Category      : {self.issue_category}")
-        print(f"Priority      : {self.get_priority()}")
-        print(f"Status        : {self.get_status()}")
-        print(f"Assigned Team : {self.assigned_team}")
-        print(f"Created At    : {self.created_at}")
+        super().get_ticket_summary()
         print(f"Transaction ID: {self.transaction_id}")
         print(f"Payment Amount: {self.payment_amount}")
         print("-" * 40)
@@ -117,7 +109,9 @@ class PaymentTicket(Ticket):
 # Inheritance - AccountTicket is a subclass of Ticket
 class AccountTicket(Ticket):
     def __init__(self, ticket_id, user_name, issue_description, priority, account_type, requested_change):
+        # Common attributes initialized through the parent
         super().__init__(ticket_id, user_name, issue_description, "Account", priority)
+        # Child-specific attributes
         self.account_type = account_type
         self.requested_change = requested_change
 
@@ -125,14 +119,7 @@ class AccountTicket(Ticket):
         self.assigned_team = "Support Team"
 
     def get_ticket_summary(self):
-        print(f"Ticket ID     : {self.ticket_id}")
-        print(f"User Name     : {self.user_name}")
-        print(f"Issue         : {self.issue_description}")
-        print(f"Category      : {self.issue_category}")
-        print(f"Priority      : {self.get_priority()}")
-        print(f"Status        : {self.get_status()}")
-        print(f"Assigned Team : {self.assigned_team}")
-        print(f"Created At    : {self.created_at}")
+        super().get_ticket_summary()
         print(f"Account Type  : {self.account_type}")
         print(f"Requested     : {self.requested_change}")
         print("-" * 40)
