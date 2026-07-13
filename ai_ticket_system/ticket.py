@@ -67,19 +67,72 @@ class Ticket:
 
 
 # Inheritance - TechnicalTicket is a subclass of Ticket
-# No custom __init__ needed — parent Ticket.__init__ is inherited directly
 class TechnicalTicket(Ticket):
+    def __init__(self, ticket_id, user_name, issue_description, priority, system_name, error_code):
+        super().__init__(ticket_id, user_name, issue_description, "Technical", priority)
+        self.system_name = system_name
+        self.error_code = error_code
+
     def assign_team(self):
         self.assigned_team = "Technical Team"
+
+    def get_ticket_summary(self):
+        print(f"Ticket ID     : {self.ticket_id}")
+        print(f"User Name     : {self.user_name}")
+        print(f"Issue         : {self.issue_description}")
+        print(f"Category      : {self.issue_category}")
+        print(f"Priority      : {self.get_priority()}")
+        print(f"Status        : {self.get_status()}")
+        print(f"Assigned Team : {self.assigned_team}")
+        print(f"Created At    : {self.created_at}")
+        print(f"System Name   : {self.system_name}")
+        print(f"Error Code    : {self.error_code}")
+        print("-" * 40)
 
 
 # Inheritance - PaymentTicket is a subclass of Ticket
 class PaymentTicket(Ticket):
+    def __init__(self, ticket_id, user_name, issue_description, priority, transaction_id, payment_amount):
+        super().__init__(ticket_id, user_name, issue_description, "Payment", priority)
+        self.transaction_id = transaction_id
+        self.payment_amount = payment_amount
+
     def assign_team(self):
         self.assigned_team = "Finance Team"
+
+    def get_ticket_summary(self):
+        print(f"Ticket ID     : {self.ticket_id}")
+        print(f"User Name     : {self.user_name}")
+        print(f"Issue         : {self.issue_description}")
+        print(f"Category      : {self.issue_category}")
+        print(f"Priority      : {self.get_priority()}")
+        print(f"Status        : {self.get_status()}")
+        print(f"Assigned Team : {self.assigned_team}")
+        print(f"Created At    : {self.created_at}")
+        print(f"Transaction ID: {self.transaction_id}")
+        print(f"Payment Amount: {self.payment_amount}")
+        print("-" * 40)
 
 
 # Inheritance - AccountTicket is a subclass of Ticket
 class AccountTicket(Ticket):
+    def __init__(self, ticket_id, user_name, issue_description, priority, account_type, requested_change):
+        super().__init__(ticket_id, user_name, issue_description, "Account", priority)
+        self.account_type = account_type
+        self.requested_change = requested_change
+
     def assign_team(self):
         self.assigned_team = "Support Team"
+
+    def get_ticket_summary(self):
+        print(f"Ticket ID     : {self.ticket_id}")
+        print(f"User Name     : {self.user_name}")
+        print(f"Issue         : {self.issue_description}")
+        print(f"Category      : {self.issue_category}")
+        print(f"Priority      : {self.get_priority()}")
+        print(f"Status        : {self.get_status()}")
+        print(f"Assigned Team : {self.assigned_team}")
+        print(f"Created At    : {self.created_at}")
+        print(f"Account Type  : {self.account_type}")
+        print(f"Requested     : {self.requested_change}")
+        print("-" * 40)

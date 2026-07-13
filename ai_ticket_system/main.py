@@ -14,11 +14,26 @@ user4 = User(4, "Jim", "jim@gmail.com", "Customer", "Support")
 user5 = User(5, "Jill", "jill@gmail.com", "Customer", "Finance")
 
 
-ticket1 = TechnicalTicket(1, user1.user_name, "Cannot log in to account", "Technical", PRIORITIES[5][0])
-ticket2 = PaymentTicket(2, user2.user_name, "Payment failed but money was deducted", "Payment", PRIORITIES[4][0])
-ticket3 = AccountTicket(3, user3.user_name, "Want to update email address", "Account", PRIORITIES[2][0])
-ticket4 = TechnicalTicket(4, user4.user_name, "App is slow on mobile", "Technical", PRIORITIES[3][0])
-ticket5 = PaymentTicket(5, user5.user_name, "Question about billing cycle", "Payment", PRIORITIES[1][0])
+ticket1 = TechnicalTicket(
+    1, user1.user_name, "Cannot log in to account", PRIORITIES[5][0],
+    "AuthService", "ERR_AUTH_401"
+)
+ticket2 = PaymentTicket(
+    2, user2.user_name, "Payment failed but money was deducted", PRIORITIES[4][0],
+    "TXN-10021", 49.99
+)
+ticket3 = AccountTicket(
+    3, user3.user_name, "Want to update email address", PRIORITIES[2][0],
+    "Personal", "Change email"
+)
+ticket4 = TechnicalTicket(
+    4, user4.user_name, "App is slow on mobile", PRIORITIES[3][0],
+    "MobileApp", "ERR_PERF_Slow"
+)
+ticket5 = PaymentTicket(
+    5, user5.user_name, "Question about billing cycle", PRIORITIES[1][0],
+    "TXN-10055", 19.99
+)
 
 for ticket in [ticket1, ticket2, ticket3, ticket4, ticket5]:
     manager.add_ticket(ticket)

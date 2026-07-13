@@ -5,13 +5,16 @@ from constants import PRIORITIES, STATUSES
 
 def test_assign_team_override():
     technical = TechnicalTicket(
-        1, "Jay", "Cannot log in to account", "Technical", PRIORITIES[5][0]
+        1, "Jay", "Cannot log in to account", PRIORITIES[5][0],
+        "AuthService", "ERR_AUTH_401"
     )
     payment = PaymentTicket(
-        2, "John", "Payment failed but money was deducted", "Payment", PRIORITIES[4][0]
+        2, "John", "Payment failed but money was deducted", PRIORITIES[4][0],
+        "TXN-10021", 49.99
     )
     account = AccountTicket(
-        3, "Jane", "Want to update email address", "Account", PRIORITIES[2][0]
+        3, "Jane", "Want to update email address", PRIORITIES[2][0],
+        "Personal", "Change email"
     )
 
     technical.assign_team()
@@ -64,7 +67,8 @@ def test_inherited_methods():
     print("=== Test Inherited Methods ===")
 
     child = TechnicalTicket(
-        10, "Jay", "App crashes on launch", "Technical", PRIORITIES[4][0]
+        10, "Jay", "App crashes on launch", PRIORITIES[4][0],
+        "MobileApp", "ERR_CRASH_500"
     )
 
     child.update_status(STATUSES[2][0])
@@ -88,7 +92,8 @@ def test_inherited_private_data():
     print("=== Test Inherited Private Data ===")
 
     child = PaymentTicket(
-        11, "John", "Refund not received", "Payment", PRIORITIES[3][0]
+        11, "John", "Refund not received", PRIORITIES[3][0],
+        "TXN-20011", 25.00
     )
 
     status = child.get_status()
@@ -114,13 +119,16 @@ def test_child_objects_in_manager():
     manager = TicketManager()
 
     technical = TechnicalTicket(
-        1, "Jay", "Cannot log in to account", "Technical", PRIORITIES[5][0]
+        1, "Jay", "Cannot log in to account", PRIORITIES[5][0],
+        "AuthService", "ERR_AUTH_401"
     )
     payment = PaymentTicket(
-        2, "John", "Payment failed but money was deducted", "Payment", PRIORITIES[4][0]
+        2, "John", "Payment failed but money was deducted", PRIORITIES[4][0],
+        "TXN-10021", 49.99
     )
     account = AccountTicket(
-        3, "Jane", "Want to update email address", "Account", PRIORITIES[2][0]
+        3, "Jane", "Want to update email address", PRIORITIES[2][0],
+        "Personal", "Change email"
     )
 
     for ticket in [technical, payment, account]:
@@ -151,9 +159,9 @@ def test_polymorphism():
     print("=== Test Polymorphism ===")
 
     tickets = [
-        TechnicalTicket(1, "Jay", "Cannot log in", "Technical", PRIORITIES[5][0]),
-        PaymentTicket(2, "John", "Payment failed", "Payment", PRIORITIES[4][0]),
-        AccountTicket(3, "Jane", "Update email", "Account", PRIORITIES[2][0]),
+        TechnicalTicket(1, "Jay", "Cannot log in", PRIORITIES[5][0], "AuthService", "ERR_AUTH_401"),
+        PaymentTicket(2, "John", "Payment failed", PRIORITIES[4][0], "TXN-10021", 49.99),
+        AccountTicket(3, "Jane", "Update email", PRIORITIES[2][0], "Personal", "Change email"),
     ]
 
     expected = {
@@ -188,12 +196,51 @@ def test_polymorphism():
     return all_passed
 
 
+def test_child_specific_attributes():
+    print("=== Test Child-Specific Attributes (super) ===")
+
+    technical = TechnicalTicket(
+        1, "Jay", "Cannot log in", PRIORITIES[5][0], "AuthService", "ERR_AUTH_401"
+    )
+    payment = PaymentTicket(
+        2, "John", "Payment failed", PRIORITIES[4][0], "TXN-10021", 49.99
+    )
+    account = AccountTicket(
+        3, "Jane", "Update email", PRIORITIES[2][0], "Personal", "Change email"
+    )
+
+    parent_ok = (
+        technical.issue_category == "Technical"
+        and payment.issue_category == "Payment"
+        and account.issue_category == "Account"
+    )
+    child_ok = (
+        technical.system_name == "AuthService"
+        and technical.error_code == "ERR_AUTH_401"
+        and payment.transaction_id == "TXN-10021"
+        and payment.payment_amount == 49.99
+        and account.account_type == "Personal"
+        and account.requested_change == "Change email"
+    )
+    passed = parent_ok and child_ok
+
+    print(f"Technical -> system_name={technical.system_name}, error_code={technical.error_code}")
+    print(f"Payment   -> transaction_id={payment.transaction_id}, amount={payment.payment_amount}")
+    print(f"Account   -> account_type={account.account_type}, requested={account.requested_change}")
+    print("Parent attrs set via super(); child attrs set in child __init__")
+    print(f"Child attributes work : {passed}")
+    print("-" * 40)
+
+    return passed
+
+
 if __name__ == "__main__":
     override_ok = test_assign_team_override()
     methods_ok = test_inherited_methods()
     private_ok = test_inherited_private_data()
     manager_ok = test_child_objects_in_manager()
     poly_ok = test_polymorphism()
+    attrs_ok = test_child_specific_attributes()
 
     print("=== Summary ===")
     print(f"Override         : {override_ok}")
@@ -201,3 +248,4 @@ if __name__ == "__main__":
     print(f"Private data     : {private_ok}")
     print(f"Manager storage  : {manager_ok}")
     print(f"Polymorphism     : {poly_ok}")
+    print(f"Child attributes : {attrs_ok}")
