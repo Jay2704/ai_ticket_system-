@@ -1,8 +1,10 @@
+from abc import ABC, abstractmethod
+
 from constants import PRIORITIES, STATUSES
 from exceptions import InvalidPriorityError, InvalidStatusError
 
 
-class Ticket:
+class Ticket(ABC):
 
     def __init__(self, ticket_id, user_name, issue_description, issue_category, priority):
         self.ticket_id = ticket_id
@@ -43,15 +45,10 @@ class Ticket:
         else:
             raise InvalidPriorityError(f"Invalid priority: {new_priority}")
 
+    @abstractmethod
     def assign_team(self):
-        if self.issue_category == "Technical":
-            self.assigned_team = "IT Team"
-        elif self.issue_category == "Payment":
-            self.assigned_team = "Finance Team"
-        elif self.issue_category == "Account":
-            self.assigned_team = "Support Team"
-        else:
-            self.assigned_team = "General Support"
+        """Every specialized ticket class must implement team assignment."""
+        pass
 
     def get_ticket_summary(self):
         print(f"Ticket ID     : {self.ticket_id}")
@@ -62,9 +59,7 @@ class Ticket:
         print(f"Status        : {self.__status}")
         print(f"Assigned Team : {self.assigned_team}")
         print(f"Created At    : {self.created_at}")
-        # Separator only for base Ticket; children add extras then print their own
-        if type(self) is Ticket:
-            print("-" * 40)
+
 
 
 

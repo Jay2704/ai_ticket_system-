@@ -1,4 +1,4 @@
-from ticket import TechnicalTicket, PaymentTicket, AccountTicket
+from ticket import Ticket, TechnicalTicket, PaymentTicket, AccountTicket
 from ticket_manager import TicketManager
 from constants import PRIORITIES, STATUSES
 
@@ -22,8 +22,8 @@ def test_assign_team_override():
     account.assign_team()
 
     print("=== Verify Method Overriding ===")
-    print("Parent Ticket.assign_team() would set Technical -> 'IT Team'")
-    print("Child TechnicalTicket.assign_team() should set -> 'Technical Team'")
+    print("Ticket.assign_team() is abstract — each child must implement it")
+    print("TechnicalTicket.assign_team() should set -> 'Technical Team'")
     print()
 
     checks = [
@@ -255,6 +255,103 @@ def test_summary_override_with_super():
     return passed
 
 
+def test_isinstance():
+    print("=== Learn isinstance() ===")
+
+    technical = TechnicalTicket(
+        1, "Jay", "Cannot log in", PRIORITIES[5][0], "AuthService", "ERR_AUTH_401"
+    )
+    payment = PaymentTicket(
+        2, "John", "Payment failed", PRIORITIES[4][0], "TXN-10021", 49.99
+    )
+    account = AccountTicket(
+        3, "Jane", "Update email", PRIORITIES[2][0], "Personal", "Change email"
+    )
+
+    checks = [
+        (isinstance(technical, Ticket), True, "technical is a Ticket"),
+        (isinstance(technical, TechnicalTicket), True, "technical is a TechnicalTicket"),
+        (isinstance(technical, PaymentTicket), False, "technical is NOT a PaymentTicket"),
+        (isinstance(payment, Ticket), True, "payment is a Ticket"),
+        (isinstance(payment, PaymentTicket), True, "payment is a PaymentTicket"),
+        (isinstance(account, Ticket), True, "account is a Ticket"),
+        (isinstance(account, AccountTicket), True, "account is an AccountTicket"),
+        (isinstance(account, TechnicalTicket), False, "account is NOT a TechnicalTicket"),
+    ]
+
+    all_passed = True
+    for result, expected, label in checks:
+        passed = result == expected
+        all_passed = all_passed and passed
+        print(f"{label}: {result} (expected {expected}) -> {passed}")
+
+    print(f"isinstance checks work : {all_passed}")
+    print("-" * 40)
+
+    return all_passed
+
+
+def test_mro():
+    print("=== Learn MRO (Method Resolution Order) ===")
+
+    technical_mro = [cls.__name__ for cls in TechnicalTicket.__mro__]
+    payment_mro = [cls.__name__ for cls in PaymentTicket.__mro__]
+    account_mro = [cls.__name__ for cls in AccountTicket.__mro__]
+
+    print(f"TechnicalTicket MRO: {technical_mro}")
+    print(f"PaymentTicket MRO  : {payment_mro}")
+    print(f"AccountTicket MRO  : {account_mro}")
+
+    expected_tail = ["Ticket", "ABC", "object"]
+    passed = (
+        technical_mro == ["TechnicalTicket", *expected_tail]
+        and payment_mro == ["PaymentTicket", *expected_tail]
+        and account_mro == ["AccountTicket", *expected_tail]
+    )
+
+    print("Python looks up methods in this order (child -> parent -> ABC -> object)")
+    print(f"MRO checks work : {passed}")
+    print("-" * 40)
+
+    return passed
+
+
+def test_abstract_assign_team():
+    print("=== Abstract Base Class: require assign_team() ===")
+
+    # Child classes that implement assign_team can be created
+    technical = TechnicalTicket(
+        1, "Jay", "Cannot log in", PRIORITIES[5][0], "AuthService", "ERR_AUTH_401"
+    )
+    technical.assign_team()
+    children_ok = technical.assigned_team == "Technical Team"
+
+    # Ticket itself is abstract — cannot be instantiated directly
+    cannot_create_base = False
+    try:
+        Ticket(1, "Jay", "Generic issue", "Technical", PRIORITIES[2][0])
+    except TypeError as e:
+        cannot_create_base = True
+        print(f"Cannot create Ticket() directly: {e}")
+
+    # A subclass that forgets assign_team() also cannot be created
+    class BrokenTicket(Ticket):
+        pass
+
+    cannot_create_broken = False
+    try:
+        BrokenTicket(99, "Sam", "Broken", "Technical", PRIORITIES[2][0])
+    except TypeError as e:
+        cannot_create_broken = True
+        print(f"Cannot create subclass without assign_team(): {e}")
+
+    passed = children_ok and cannot_create_base and cannot_create_broken
+    print(f"Abstract assign_team works : {passed}")
+    print("-" * 40)
+
+    return passed
+
+
 if __name__ == "__main__":
     override_ok = test_assign_team_override()
     methods_ok = test_inherited_methods()
@@ -263,6 +360,9 @@ if __name__ == "__main__":
     poly_ok = test_polymorphism()
     attrs_ok = test_child_specific_attributes()
     summary_ok = test_summary_override_with_super()
+    isinstance_ok = test_isinstance()
+    mro_ok = test_mro()
+    abc_ok = test_abstract_assign_team()
 
     print("=== Summary ===")
     print(f"Override         : {override_ok}")
@@ -272,3 +372,6 @@ if __name__ == "__main__":
     print(f"Polymorphism     : {poly_ok}")
     print(f"Child attributes : {attrs_ok}")
     print(f"Summary override : {summary_ok}")
+    print(f"isinstance       : {isinstance_ok}")
+    print(f"MRO              : {mro_ok}")
+    print(f"Abstract ABC     : {abc_ok}")
