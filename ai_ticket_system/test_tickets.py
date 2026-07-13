@@ -147,14 +147,57 @@ def test_child_objects_in_manager():
     return passed
 
 
+def test_polymorphism():
+    print("=== Test Polymorphism ===")
+
+    tickets = [
+        TechnicalTicket(1, "Jay", "Cannot log in", "Technical", PRIORITIES[5][0]),
+        PaymentTicket(2, "John", "Payment failed", "Payment", PRIORITIES[4][0]),
+        AccountTicket(3, "Jane", "Update email", "Account", PRIORITIES[2][0]),
+    ]
+
+    expected = {
+        "TechnicalTicket": "Technical Team",
+        "PaymentTicket": "Finance Team",
+        "AccountTicket": "Support Team",
+    }
+
+    print("Same call in a loop: ticket.assign_team()")
+    print("Different child implementations run automatically:")
+    print()
+
+    all_passed = True
+    for ticket in tickets:
+        ticket.assign_team()
+
+        class_name = type(ticket).__name__
+        method_used = type(ticket).assign_team.__qualname__
+        team = ticket.assigned_team
+        passed = team == expected[class_name] and method_used.startswith(class_name)
+        all_passed = all_passed and passed
+
+        print(f"Class        : {class_name}")
+        print(f"Method used  : {method_used}")
+        print(f"Assigned team: {team}")
+        print(f"Correct      : {passed}")
+        print("-" * 40)
+
+    print(f"Polymorphism works : {all_passed}")
+    print("-" * 40)
+
+    return all_passed
+
+
 if __name__ == "__main__":
     override_ok = test_assign_team_override()
     methods_ok = test_inherited_methods()
     private_ok = test_inherited_private_data()
     manager_ok = test_child_objects_in_manager()
+    poly_ok = test_polymorphism()
 
     print("=== Summary ===")
     print(f"Override         : {override_ok}")
     print(f"Inherited methods: {methods_ok}")
     print(f"Private data     : {private_ok}")
     print(f"Manager storage  : {manager_ok}")
+    print(f"Polymorphism     : {poly_ok}")
