@@ -1,22 +1,19 @@
-# ai_ticket_system-
-This is just for practicing OOPS.
+Phase 1: OOP Basics                  ✅
+Phase 2: Composition                 ✅
+Phase 3: Encapsulation               ✅
+Phase 4: Inheritance                 ✅
+Phase 5: Polymorphism                ✅
+Phase 6: Method Overriding           ✅
+Phase 7: super()                     ✅
+Phase 8: isinstance()                ✅
+Phase 9: MRO                         ✅
+Phase 10: Abstract Base Classes      ✅
 
-1. Class
-What is a class?
-Why do we need classes?
-Class as a blueprint/template
-Real world examples of classes
-2. Object
-What is an object?
-Difference between class and object
-Multiple objects from the same class
-Memory allocation for objects
-3. Attributes (Properties)
-What are attributes?
-Object data vs class data
-How attributes represent an object's state
-Instance attributes
-4. Methods (Behaviors)
-What are methods?
-How methods define object behavior
-Difference between attributes and methods
+Optional:
+□ Class Variables
+□ Static Methods
+□ Class Methods
+□ Magic Methods (__str__, __repr__, etc.)
+□ File Persistence
+□ Unit Testing
+□ SOLID Principles
